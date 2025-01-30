@@ -27,6 +27,8 @@ struct ContentView: View {
             }
             .navigationDestination(for: Int.self) { selection in
                 Text("Destination for \(selection)")
+                Image(systemName: "figure.walk")
+                    .font(.largeTitle)
             }
         }
     }
