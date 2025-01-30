@@ -8,29 +8,40 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var path = [Int]()
+    // NavigationPath is what we call a type-eraser – it stores any kind of Hashable data without exposing exactly what type of data each item is.
+    @State private var path = NavigationPath()
     
     var body: some View {
+        
+        
         NavigationStack(path: $path) {
-            VStack {
-                Button("Show 32") {
-                    path = [32]
+                List {
+                    ForEach(0..<5) { i in
+                        NavigationLink("Select Number: \(i)", value: i)
+                    }
+                    
+                    ForEach(0..<5) { i in
+                        NavigationLink("Select String: \(i)", value: String(i))
+                    }
                 }
-                
-                Button("Show 64") {
-                    path.append(64)
+                .toolbar {
+                    Button("Push 777") {
+                        path.append(777)
+                    }
+                    
+                    Button("Push Hello") {
+                        path.append("Hello")
+                    }
                 }
-                
-                Button("Show 32 and 64") {
-                    path = [32, 64]
+                .navigationDestination(for: Int.self) { selection in
+                    Text("You selected number \(selection)")
+                }
+                .navigationDestination(for: String.self) { selection in
+                    Text("You selected string \(selection)")
                 }
             }
-            .navigationDestination(for: Int.self) { selection in
-                Text("Destination for \(selection)")
-                Image(systemName: "figure.walk")
-                    .font(.largeTitle)
-            }
-        }
+        
+
     }
 }
 
