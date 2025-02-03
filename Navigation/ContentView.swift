@@ -7,41 +7,33 @@
 
 import SwiftUI
 
+struct DetailView: View {
+    var number: Int
+    @Binding var path: NavigationPath
+    
+    var body: some View {
+        NavigationLink("Go to Random Number", value: Int.random(in: 1...1000))
+            .navigationTitle("Number \(number)")
+            .toolbar {
+                Button("Home") {
+                    path = NavigationPath()
+                }
+            }
+    }
+}
+
 struct ContentView: View {
-    // NavigationPath is what we call a type-eraser – it stores any kind of Hashable data without exposing exactly what type of data each item is.
     @State private var path = NavigationPath()
     
     var body: some View {
         
-        
         NavigationStack(path: $path) {
-                List {
-                    ForEach(0..<5) { i in
-                        NavigationLink("Select Number: \(i)", value: i)
-                    }
-                    
-                    ForEach(0..<5) { i in
-                        NavigationLink("Select String: \(i)", value: String(i))
-                    }
+            DetailView(number: 0, path: $path)
+                .navigationDestination(for: Int.self) { i in
+                    DetailView(number: 0, path: $path)
                 }
-                .toolbar {
-                    Button("Push 777") {
-                        path.append(777)
-                    }
-                    
-                    Button("Push Hello") {
-                        path.append("Hello")
-                    }
-                }
-                .navigationDestination(for: Int.self) { selection in
-                    Text("You selected number \(selection)")
-                }
-                .navigationDestination(for: String.self) { selection in
-                    Text("You selected string \(selection)")
-                }
-            }
+        }
         
-
     }
 }
 
