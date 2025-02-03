@@ -13,13 +13,20 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            List(0..<100) { i in
-                Text("Roe \(i)")
-            }
-            .navigationTitle("Title goes here")
-            .toolbarBackground(.blue)
-            .toolbarColorScheme(.dark)
-            .toolbar (.hidden, for: .navigationBar)
+            
+            Text("Hello, World!")
+                .toolbar {
+                    // Semantic placement
+                    ToolbarItemGroup(placement: .confirmationAction) {
+                        Button("Tap Me") {
+                            
+                        }
+                        
+                        Button("Tap Me 2") {
+                            
+                        }
+                    }
+                }
         }
     }
 }
