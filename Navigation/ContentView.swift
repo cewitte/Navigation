@@ -7,26 +7,16 @@
 
 import SwiftUI
 
-
-
 struct ContentView: View {
+    @State private var title = "SwiftUI"
     
     var body: some View {
         NavigationStack {
-            
+            // This is good when you have an element like
+            // a document title, which the user can rename.
             Text("Hello, World!")
-                .toolbar {
-                    // Semantic placement
-                    ToolbarItemGroup(placement: .confirmationAction) {
-                        Button("Tap Me") {
-                            
-                        }
-                        
-                        Button("Tap Me 2") {
-                            
-                        }
-                    }
-                }
+                .navigationTitle($title)
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
